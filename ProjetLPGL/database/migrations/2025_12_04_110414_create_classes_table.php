@@ -11,11 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('matieres', function (Blueprint $table) {
+        Schema::create('classes', function (Blueprint $table) {
             $table->id();
-            $table->string('libelle');
-            $table->string('coefficient');
+             $table->string('libelle');
+            $table->unsignedBigInteger('enseignant_id'); // FK vers enseignants
             $table->timestamps();
+            $table->foreign('enseignant_id')->references('id')->on('enseignants')->onDelete('cascade');
         });
     }
 
@@ -24,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('matieres');
+        Schema::dropIfExists('classes');
     }
 };

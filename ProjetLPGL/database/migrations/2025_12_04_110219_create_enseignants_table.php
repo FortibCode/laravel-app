@@ -11,16 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('etudiants', function (Blueprint $table) {
+        Schema::create('enseignants', function (Blueprint $table) {
             $table->id();
             $table->string('nom');
             $table->string('prenom');
-            $table->string('email');
-            $table->string('date_naissance');
             $table->string('tel');
-            $table->foreignId('classe_id')->constrained('classes')->onDelete('cascade');
-            $table->string('adresse');
+            $table->string('email')->unique();
+            $table->unsignedBigInteger('matiere_id'); // FK vers matieres
+            $table->string('specialite');
             $table->timestamps();
+            $table->foreign('matiere_id')->references('id')->on('matieres')->onDelete('cascade');
         });
     }
 
@@ -29,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('etudiants');
+        Schema::dropIfExists('enseignants');
     }
 };
